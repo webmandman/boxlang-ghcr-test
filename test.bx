@@ -1,0 +1,13 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.System;
+
+class {
+     function main( args=[] ) { 
+	 	t = { "1": {}, 2: "none", };
+        br = new BufferedReader(new InputStreamReader(System.in));
+        print("Enter Name: ");
+        s = br.readLine();
+		println(s);
+    }
+}

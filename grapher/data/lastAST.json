@@ -1,0 +1,17 @@
+{
+  "ASTType" : "BoxScript",
+  "ASTPackage" : "ortus.boxlang.compiler.ast",
+  "sourceText" : "",
+  "position" : {
+    "start" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "end" : {
+      "line" : 2,
+      "column" : 5
+    }
+  },
+  "comments" : [ ],
+  "statements" : [ ]
+}
