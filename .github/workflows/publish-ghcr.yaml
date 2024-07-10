@@ -13,4 +13,8 @@ jobs:
           docker login --username webmandman --password ${{ secrets.GH_PAT }} ghcr.io
           docker build . --tag ghcr.io/webmandman/hello-world-ghcr:latest
           docker push ghcr.io/webmandman/hello-world-ghcr:latest
-
+      - name: Render.com Redeploy Webhook
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://api.render.com/deploy/srv-cq6v8uo8fa8c7381c9tg?key=GZLEYgOVQqI'
+          method: 'GET'
