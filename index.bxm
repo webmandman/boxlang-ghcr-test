@@ -35,7 +35,7 @@
 <body>
     <div class="container">
         <h1>Hello World Github Container Test</h1>
-            <p>The current date and time is <bx:output>#DateTimeFormat(now(),'full')#</bx:output></p>
+            <p>The current date and time is <bx:output>#DateTimeFormat(now(),'full','PT')#</bx:output></p>
     </div>
 </body>
 </html>
