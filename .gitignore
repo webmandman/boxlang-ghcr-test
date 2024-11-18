@@ -1,1 +1,4 @@
 **/boxlang-module-template
+**/.grapher
+**/bx-*/*
+.env

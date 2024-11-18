@@ -3,6 +3,9 @@
         "cfengine":"boxlang"
     },
     "JVM":{
-        "javaVersion":"openjdk17_jdk"
+        "javaVersion":"openjdk21_jdk"
+    },
+    "web":{
+        "welcomeFiles":"index.bxm"
     }
 }

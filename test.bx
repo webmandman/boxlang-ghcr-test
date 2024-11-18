@@ -1,5 +1,0 @@
-class output=true accessors=false {
-    string function foo(required string bar){
-        return "hello #arguments.bar#";
-    }
-}

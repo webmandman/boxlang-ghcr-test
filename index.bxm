@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +38,9 @@
     <div class="container">
         <h1>Hello World Github Container Test</h1>
         <p>The current date and time is <bx:output>#DateTimeFormat(now(),'full','PST')#</bx:output></p>
+        <p>Server IP Address: <bx:output>#cgi.SERVER_NAME#</bx:output></p>
+        <p>Server Port: <bx:output>#cgi.SERVER_PORT#</bx:output></p>
+        <p>Application Test Variable Value: <bx:output>#application.test#</bx:output></p> 
     </div>
 </body>
 </html>

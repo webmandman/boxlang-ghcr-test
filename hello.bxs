@@ -1,7 +1,0 @@
-str = "hello"
-
-echo("hello world")
-
-str2 = str
-
-echo(str.toUpperCase())
