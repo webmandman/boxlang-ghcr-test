@@ -87,14 +87,16 @@ jobs:
       - name: Build and push the image
         run: |
           docker login --username <github-username-goes-here> --password ${{secrets.GH_PAT}} ghcr.io
-          docker build . --tag ghcr.io/<github-name-goes-here>/<image-name-goes-here>:latest
-          docker push ghcr.io/<github-name-goes-here>/<image-name-goes-here>:latest
+          docker build . --tag ghcr.io/YOUR_GITHUB_USERNAME/NAME_YOUR_IMAGE_WHATEVER_YOU_WANT_HERE:latest
+          docker push ghcr.io/YOUR_GITHUB_USERNAME/NAME_YOUR_IMAGE_WHATEVER_YOU_WANT_HERE:latest
       - name: Render.com Redeploy Webhook
         uses: fjogeleit/http-request-action@v1
         with:
           url: 'https://google.com'
           method: 'GET'
 ```
+
+By simply have this Github workflow file in your repo, Github will create an action for you. The action will the instructions in the file. First, `on: push` is instructing Github to do a job on every git push to your main/master branch. Secondly, it is instructing Github to spin up an instance of Ubuntu operating system. Third, it is running the docker login, docker build and docker push commands. Make sure you replace the placeholders. Here is where you name the docker image you want built - name it whatever you like (only use letters and dashes). Lastly, it is going to make an http request to google.com - this is only for now. Later in this tutorial you will be replacing this url with the Render.com Redeploy Webhook url. 
 
 ### 7. Push Your Code to GitHub
 
