@@ -35,6 +35,8 @@ The entire process, from committing on your machine to a live deployment on Rend
 ### 1. Create a GitHub Personal Access Token
 1. Go to **Profile Picture → Settings → Developer Settings → Tokens (Classic)**.
 2. Create a token and save it in your secrets vault.
+   - Make sure these permissions are set:
+     - delete:packages, repo, write:packages
 
 ---
 
@@ -44,7 +46,7 @@ The entire process, from committing on your machine to a live deployment on Rend
 ---
 
 ### 3. Create a Repository Secret
-1. Go to your repository → **Settings → Actions → Secrets and Variables → Repository Secrets**.
+1. Go to your repository → **Settings → Secrets and Variables → Actions → Repository Secrets**.
 2. Create a new secret:
    - **Name**: `GH_PAT`
    - **Value**: Your GitHub Personal Access Token from Step 1.
