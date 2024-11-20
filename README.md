@@ -86,9 +86,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build and push the image
         run: |
-          docker login --username <github-username-goes-here> --password ${{secrets.GH_PAT}} ghcr.io
-          docker build . --tag ghcr.io/YOUR_GITHUB_USERNAME/NAME_YOUR_IMAGE_WHATEVER_YOU_WANT_HERE:latest
-          docker push ghcr.io/YOUR_GITHUB_USERNAME/NAME_YOUR_IMAGE_WHATEVER_YOU_WANT_HERE:latest
+          docker login --username YOUR_GITHUB_USERNAME_HERE --password ${{secrets.GH_PAT}} ghcr.io
+          docker build . --tag ghcr.io/YOUR_GITHUB_USERNAME_HERE/boxlang-ghcr:latest
+          docker push ghcr.io/YOUR_GITHUB_USERNAME_HERE/boxlang-ghcr:latest
       - name: Render.com Redeploy Webhook
         uses: fjogeleit/http-request-action@v1
         with:
@@ -102,8 +102,8 @@ By simply having this Github workflow file in your repo, Github will create an a
 ### 7. Push Your Code to GitHub
 
 - Commit and push your code to GitHub.
-- This will start an action under your project’s **Actions** tab.
-  - The step that builds the Docker container and pushes it to `ghcr.io` should succeed.
+- This will start the Github action under the **Actions** tab.
+  - The step that builds the Docker container and pushes it to `ghcr.io` should succeed as long as you have the dockerfile, the token secret in your environment and properly replaced the placeholders in the workflow file with your Github username.
   - The step for Render.com will fail (for now).
 
 ---
