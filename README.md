@@ -95,8 +95,9 @@ jobs:
           url: 'https://google.com'
           method: 'GET'
 ```
+A GitHub Action is a customizable workflow automation tool in GitHub that enables tasks like building, testing, and deploying code to be executed automatically in response to events in a repository. 
 
-By simply have this Github workflow file in your repo, Github will create an action for you. The action will the instructions in the file. First, `on: push` is instructing Github to do a job on every git push to your main/master branch. Secondly, it is instructing Github to spin up an instance of Ubuntu operating system. Third, it is running the docker login, docker build and docker push commands. Make sure you replace the placeholders. Here is where you name the docker image you want built - name it whatever you like (only use letters and dashes). Lastly, it is going to make an http request to google.com - this is only for now. Later in this tutorial you will be replacing this url with the Render.com Redeploy Webhook url. 
+By simply having this Github workflow file in your repo, Github will create an action.  First, `on: push` it is instructing Github to do a job on every git push to your main/master branch. Secondly, it is instructing Github to spin up an instance of Ubuntu operating system. Third, it is running the docker login, docker build and docker push commands. Make sure you replace the placeholders. Here is where you name the docker image you want built - name it whatever you like (only use letters and dashes). Lastly, it is going to make an http request to google.com - this is only for now. Later in this tutorial you will be replacing this url with the Render.com Redeploy Webhook url. 
 
 ### 7. Push Your Code to GitHub
 
