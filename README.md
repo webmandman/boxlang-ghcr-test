@@ -1,6 +1,6 @@
 # Part One - Boxlang, Github Actions, Docker Container, Deployment with Render.com
 
-The deployment process allows you to commit changes to your website code on GitHub. The GitHub action will automatically build the container image and push it to the GitHub Container Registry. Finally, an HTTP GET request to the Render.com redeploy webhook deploys the container image with the latest code changes. 
+The deployment process allows you to commit changes to your website code on GitHub. Then the GitHub action will automatically build the container image and push it to the GitHub Container Registry. Finally, an HTTP GET request to the Render.com redeploy webhook deploys the container image with the latest code changes. 
 
 The entire process, from committing on your machine to a live deployment on Render.com, takes about **90 seconds**!
 
@@ -9,10 +9,11 @@ The entire process, from committing on your machine to a live deployment on Rend
 ## Why is this Relevant to You?
 
 ### Cost-Effective
-- **GitHub**: Free.
+- **GitHub Repository**: Free.
 - **GitHub Container Registry**: Free.
-- **Render.com free tier**: Provides 0.1 CPU and 512MB RAM.  
-  - Shuts down after 8 minutes of inactivity, but startup time is only about 45 seconds.  
+- **Render.com Web Service**: Free.
+  - Provides 0.1 CPU and 512MB RAM.  
+  - Shuts down after 8 minutes of inactivity, but startup time is only about 45-90 seconds.  
   - Ideal for a hobby web app with zero users.
 
 ### Simplicity
@@ -87,8 +88,8 @@ jobs:
       - name: Build and push the image
         run: |
           docker login --username YOUR_GITHUB_USERNAME_HERE --password ${{secrets.GH_PAT}} ghcr.io
-          docker build . --tag ghcr.io/YOUR_GITHUB_USERNAME_HERE/boxlang-ghcr:latest
-          docker push ghcr.io/YOUR_GITHUB_USERNAME_HERE/boxlang-ghcr:latest
+          docker build . --tag ghcr.io/YOUR_GITHUB_USERNAME_HERE/hello-world-ghcr:latest
+          docker push ghcr.io/YOUR_GITHUB_USERNAME_HERE/hello-world-ghcr:latest
       - name: Render.com Redeploy Webhook
         uses: fjogeleit/http-request-action@v1
         with:
@@ -104,7 +105,8 @@ By simply having this Github workflow file in your repo, Github will create an a
 - Commit and push your code to GitHub.
 - This will start the Github action under the **Actions** tab.
   - The step that builds the Docker container and pushes it to `ghcr.io` should succeed as long as you have the dockerfile, the token secret in your environment and properly replaced the placeholders in the workflow file with your Github username.
-  - The step for Render.com will fail (for now).
+
+In the next steps the action will be updated to trigger Render.com to redeploy your app.
 
 ---
 
@@ -112,7 +114,7 @@ By simply having this Github workflow file in your repo, Github will create an a
 
 1. Go to [Render.com](https://render.com) and create an account.
 2. Create a **New Web Service** using the "Existing Image" option.
-3. Set the image URL as: `https://ghcr.io/<github-name>/<image-name>`
+3. Set the image URL as: `https://ghcr.io/YOUR_GITHUB_USERNAME_HERE/hello-world-ghcr`
 
 - Example: `ghcr.io/webmandman/hello-world-ghcr`
 4. Since the image is private by default, you must supply your GitHub Personal Access Token.
@@ -121,7 +123,7 @@ By simply having this Github workflow file in your repo, Github will create an a
 
 ### 9. Get Your Render.com Redeploy URL
 
-1. Go to the **Settings** of your Render.com service.
+1. Go to the **Settings** of your Render.com web service.
 2. Look for the **Redeploy Hook** URL.
 3. Save this URL to your `publish-container.yaml` file, replacing the `google.com` URL.
 
