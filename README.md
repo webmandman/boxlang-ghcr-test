@@ -86,7 +86,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build and push the image
         run: |
-          docker login --username <github-username-goes-here> --password ${secrets.GH_PAT} ghcr.io
+          docker login --username <github-username-goes-here> --password ${{secrets.GH_PAT}} ghcr.io
           docker build . --tag ghcr.io/<github-name-goes-here>/<image-name-goes-here>:latest
           docker push ghcr.io/<github-name-goes-here>/<image-name-goes-here>:latest
       - name: Render.com Redeploy Webhook
