@@ -12,14 +12,11 @@ The entire process, from committing on your machine to a live deployment on Rend
 - **GitHub Repository**: Free.
 - **GitHub Container Registry**: Free.
 - **Render.com Web Service**: Free.
-  - Provides 0.1 CPU and 512MB RAM.  
-  - Shuts down after 8 minutes of inactivity, but startup time is only about 45-90 seconds.  
-  - Ideal for a hobby web app with zero users.
 
 ### Simplicity
 - Requires minimal configuration.
 - No credit card needed.
-- Accessible and easy to implement.
+- Easy for everyone.
 
 ---
 
@@ -153,8 +150,10 @@ Note: If the action fails, you'll have to click into the action results to see t
 ### Notes
 
 - The free web service provided by Render.com comes with some limitations.
-    - **Cold Start Time**: Between 45 and 90 seconds.
     - The web serice will shut down after 8-10 minutes of no activity(no http requests).
+    - Start Time Between 45 and 90 seconds.
+    - Provides 0.1 CPU and 512MB RAM.  
+    - Ideal for a hobby web app with zero users.
 - Despite being slow, the setup is **free** and doesn't require a credit card.
 - You can upgrade your Render.com service anytime for **zero downtime**. 
 
@@ -162,6 +161,6 @@ Note: If the action fails, you'll have to click into the action results to see t
 
 ## Conclusion
 
-By following these steps you can achieve an efficient deployment workflow, ensuring your **BoxLang Miniserver website** is live and up-to-date with minimal effort.
+Follow these steps to achieve an efficient deployment workflow, ensuring your **BoxLang Miniserver website** is live and up-to-date with minimal effort.
 
 Cheers!
