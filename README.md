@@ -33,127 +33,122 @@ The entire process, from committing on your machine to a live deployment on Rend
 
 ## Steps to Configure and Deploy
 
-### 1. Create a GitHub Personal Access Token
-1. Go to **Profile Picture → Settings → Developer Settings → Tokens (Classic)**.
-2. Create a token and save it in your secrets vault.
-   - Make sure these permissions are set:
-     - delete:packages, repo, write:packages
+### 1. Get the code
+
+Use the template
+
+At the top of this page, click on **Use this Template**, then click on **Create a new repository**. You know the drill - get this new repo cloned to your local environment to start making changes and commit code.
 
 ---
 
-### 2. Create an Empty GitHub Project
-1. Go to [github.com](https://github.com) and create a new repository.
+### 2. Create a GitHub Personal Access Token
+
+1. Create an access token. An access token is tied your github account - it grants services rights on your behalf to do things on your account. Protect it - keep in a secrets vault.
+    - Go to **Profile Picture → Settings → Developer Settings → Tokens (Classic)**.
+2. Create a token and save it in your secrets vault.
+    - Make sure these permissions are set: **delete:packages, repo, write:packages**
+    - Give it a descriptive note. ie: `For boxlang docker render.com app` 
 
 ---
 
 ### 3. Create a Repository Secret
 1. Go to your repository → **Settings → Secrets and Variables → Actions → Repository Secrets**.
-2. Create a new secret:
+2. Create a new repository secret:
    - **Name**: `GH_PAT`
-   - **Value**: Your GitHub Personal Access Token from Step 1.
+   - **Value**: Your GitHub Personal Access Token from Step 2.2.
 
 ---
 
-### 4. Create Your "Hello World" App
-1. Create a new folder/project on your development machine.
-2. At the root of your project, create a file named `index.bmx` and add your HTML content.
+### 4. Required source code changes
+
+There is only 1 file that needs to be modified to make this example app work.
+
+1. Open up your github workflow file (`/.github/workflows/publish-ghcr.yaml`)
+2. Replace the github username `webmandman` with your username.
+3. Save it. Commit and Push your changes.
 
 ---
 
-### 5. Create a `Dockerfile`
-- At the root of your project, create a file named `dockerfile` (no extension, no periods) with the following content:
+### 5. Understanding the Github Workflow Action file
 
-```dockerfile
-FROM ortussolutions/boxlang:miniserver-alpine
-RUN rm /app/* -r 
-COPY ./ /app
-```
-
-### 6. Create a GitHub Workflow File
-
-1. Create a `.github/workflows/publish-container.yaml` file (two folders deep).
-2. Add the following content:
-
-```yaml
-name: Docker Image CI for GHCR Boxlang
-
-on:
-  push
-
-jobs: 
-  build_and_publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build and push the image
-        run: |
-          docker login --username YOUR_GITHUB_USERNAME_HERE --password ${{secrets.GH_PAT}} ghcr.io
-          docker build . --tag ghcr.io/YOUR_GITHUB_USERNAME_HERE/hello-world-ghcr:latest
-          docker push ghcr.io/YOUR_GITHUB_USERNAME_HERE/hello-world-ghcr:latest
-      - name: Render.com Redeploy Webhook
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://google.com'
-          method: 'GET'
-```
 A GitHub Action is a customizable workflow automation tool in GitHub that enables tasks like building, testing, and deploying code to be executed automatically in response to events in a repository. 
 
-By simply having this Github workflow file in your repo, Github will create an action.  First, `on: push` it is instructing Github to do a job on every git push to your main/master branch. Secondly, it is instructing Github to spin up an instance of Ubuntu operating system. Third, it is running the docker login, docker build and docker push commands. Make sure you replace the placeholders. Here is where you name the docker image you want built - name it whatever you like (only use letters and dashes). Lastly, it is going to make an http request to google.com - this is only for now. Later in this tutorial you will be replacing this url with the Render.com Redeploy Webhook url. 
+By simply having this Github workflow file in your repo, Github will create an action that will run every time you push commits. 
 
-### 7. Push Your Code to GitHub
+### Take a closer look
+
+  - First, `on: push` is instructing Github to do a job on every git push to your main/master branch. 
+  - Second, it is instructing Github to spin up an instance of **Ubuntu**. 
+  - Third, it is running the `docker login`, `docker build` and `docker push` commands. 
+  - Lastly, it is going to make an http request to google.com - this is only for now. Later in this tutorial you will be replacing this url with the Render.com **deploy webhook url**. 
+
+---
+
+### 6. Push Your Code to GitHub
 
 - Commit and push your code to GitHub.
-- This will start the Github action under the **Actions** tab.
-  - The step that builds the Docker container and pushes it to `ghcr.io` should succeed as long as you have the dockerfile, the token secret in your environment and properly replaced the placeholders in the workflow file with your Github username.
+- This will start your **Github Workflow Action** under the **Actions** tab.
+- Click through the action to see it in action and see the results of everything the action is doing. Its pretty cool! 
 
-In the next steps the action will be updated to trigger Render.com to redeploy your app.
+Note: If the action fails, you'll have to click into the action results to see the actual error messages. Most common errors can be solved by asking google.
 
 ---
 
-### 8. Create an Account at Render.com
+### 7. Create an Account at Render.com and Web Service
 
 1. Go to [Render.com](https://render.com) and create an account.
+2. Once you have your account, go to Workspace Settings.
+3. Under **Container Registry Credentials** click **Add Credential**
+    1. Give it a name, ie: `My Github Token`
+    2. Select Github for the Registry
+    3. Enter your username
+    4. Enter your token (from step 2.2)
+    5. Save
 2. Create a **New Web Service** using the "Existing Image" option.
-3. Set the image URL as: `https://ghcr.io/YOUR_GITHUB_USERNAME_HERE/hello-world-ghcr`
-
-- Example: `ghcr.io/webmandman/hello-world-ghcr`
-4. Since the image is private by default, you must supply your GitHub Personal Access Token.
+3. Enter your image URL: ie: `https://ghcr.io/YOUR_GITHUB_USERNAME_HERE/hello-world-ghcr`
+    - The field says to enter a Docker hub url, but you can enter a ghcr.io url as well.
+    - The url is the same url that you see in the workflow file that the docker push command requires, except do not include the last part ':latest'. 
+4. Since the image is private by default, you must supply your access oken. Under Credentials dropdown, select **My Github Token**
+5. Now you click on **Connect**
+6. Select your Region
+7. Select the Free instance type
+8. Finally, click on **Deploy Web Service**
 
 ---
 
-### 9. Get Your Render.com Redeploy URL
+### 8. Get Your Render.com Redeploy URL
 
-1. Go to the **Settings** of your Render.com web service.
-2. Look for the **Redeploy Hook** URL.
-3. Save this URL to your `publish-container.yaml` file, replacing the `google.com` URL.
+1. Go to the **Settings** page of your newly created web service.
+2. Look for the **Deploy Hook** URL.
+3. Replace `google.com` in your `/.github/workflows/publish-ghcr.yaml` file.
+4. Save your changes.
 
 ---
 
 ### 10. Push Your Code Again
 
 - Commit and push your code to GitHub.
-- This time, watch every part of the GitHub Action succeed.
-- Head over to Render.com:
+- Head over to your repo's actions tab, and watch it do its thing.
+- Then, head over to Render.com:
 - In the **Events** tab of your web service, you’ll see the deployment status.
-- Once deployment succeeds, you can visit your web app at the URL provided by Render.com.
- - Example: `https://hello-world-ghcr-latest.onrender.com`
+- Once deployment succeeds, you can visit your web app at the URL provided by Render.com. The url is next to your web service name near top left of the page.
 
 ---
 
 ### Notes
 
-- **Cold Start Time**: Around **45 seconds**.  
+- The free web service provided by Render.com comes with some limitations.
+    - **Cold Start Time**: Between 45 and 90 seconds.
+    - The web serice will shut down after 8-10 minutes of no activity(no http requests).
 - Despite being slow, the setup is **free** and doesn't require a credit card.
-- You can upgrade your Render.com service anytime for **zero downtime**.
+- You can upgrade your Render.com service anytime for **zero downtime**. 
 
 ---
 
 ## Conclusion
 
-This method is as simple as it gets, whether you use **GitHub Container Registry** or **Render.com**. It requires only:
-- **Two configuration files**.
-- **Two service accounts**.
-
-This streamlined process, with no credit card required, makes deploying a **BoxLang Miniserver website** accessible and efficient for everyone.
+This streamlined process, with no credit card required, makes deploying a **BoxLang Miniserver website** easy for everyone.
 
 By following these steps, you can achieve an efficient deployment workflow, ensuring your **BoxLang Miniserver website** is live and up-to-date with minimal effort.
+
+Cheers!
