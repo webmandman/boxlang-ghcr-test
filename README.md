@@ -33,11 +33,24 @@ The entire process, from committing on your machine to a live deployment on Rend
 
 ## Steps to Configure and Deploy
 
-### 1. Get the code
+### 1. Get the code and start up the server
 
 Use the template
 
 At the top of this page, click on **Use this Template**, then click on **Create a new repository**. You know the drill - get this new repo cloned to your local environment to start making changes and commit code.
+
+Start up the server with Commandbox
+
+If you do not have commandbox, follow the instruction here: https://commandbox.ortusbooks.com/setup/installation
+
+1. Run this command `box start`
+2. Expect the browser to open up the website.
+
+![Website on localhost](/assets/localhost.png)
+
+Look at the server.json file. This is where the server is configured. `cfengine="boxlang"` tells commandbox to start up a boxlang server, and `"javaVersion":"openjdk21_jdk"`, which is a requirement of boxlang, tells commandbox to download and install the jdk in the boxlang server directory. 
+
+Look at the index.bxm file. This is where you can edit the homepage and run some boxlang code.
 
 ---
 
@@ -133,6 +146,8 @@ Note: If the action fails, you'll have to click into the action results to see t
 - In the **Events** tab of your web service, you’ll see the deployment status.
 - Once deployment succeeds, you can visit your web app at the URL provided by Render.com. The url is next to your web service name near top left of the page.
 
+![Website on Render.com](/assets/rendercom.png)
+
 ---
 
 ### Notes
@@ -147,8 +162,6 @@ Note: If the action fails, you'll have to click into the action results to see t
 
 ## Conclusion
 
-This streamlined process, with no credit card required, makes deploying a **BoxLang Miniserver website** easy for everyone.
-
-By following these steps, you can achieve an efficient deployment workflow, ensuring your **BoxLang Miniserver website** is live and up-to-date with minimal effort.
+By following these steps you can achieve an efficient deployment workflow, ensuring your **BoxLang Miniserver website** is live and up-to-date with minimal effort.
 
 Cheers!
